@@ -1,5 +1,7 @@
 set nocompatible
 
+let mapleader=" "
+
 set t_Co=256
 
 set cursorline
@@ -121,6 +123,50 @@ set mouse=a
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+
+" VUNDLE SETUP :
+
+filetype off
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.config/nvim/bundle/Vundle.vim
+call vundle#begin('~/.config/nvim/bundle')
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'w0rp/ale'
+Plugin 'shougo/deoplete.nvim'
+Plugin 'steelsojka/deoplete-flow'
+Plugin 'morhetz/gruvbox'
+Plugin 'posva/vim-vue'
+" All of your Plugins must be added before the following line
+call vundle#end()
+filetype plugin indent on  " allows auto-indenting depending on file type
+
+
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#flow#flow_bin = 'flow' 
+call deoplete#custom#option({
+\ 'auto_complete_delay': 0,
+\ 'smart_case': v:true,
+\})
+inoremap <expr><Enter>  pumvisible() ? "\<C-Y>" : "\<Enter>"
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
+
+
+
+let g:gitgutter_enabled = 1
+autocmd BufWritePost * GitGutter
+
+let g:airline#extensions#ale#enabled = 1
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
+let g:ale_fixers = {
+\	'javascript': ['eslint']
+\}
+nmap <leader>f <Plug>(ale_fix)
 
 colorscheme gruvbox
 set background=dark
