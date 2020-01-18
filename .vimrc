@@ -14,42 +14,42 @@ set colorcolumn=80
 hi ColorColumn ctermbg=52
 
 " Save your backups to a less annoying place than the current directory.
-" If you have .vim-backup in the current directory, it'll use that.
-" Otherwise it saves it to ~/.vim/backup or . if all else fails.
-if isdirectory($HOME . '/.vim/backup') == 0
-  :silent !mkdir -p ~/.vim/backup >/dev/null 2>&1
+" If you have .nvim-backup in the current directory, it'll use that.
+" Otherwise it saves it to ~/.nvim/backup or . if all else fails.
+if isdirectory($HOME . '/.nvim/backup') == 0
+  :silent !mkdir -p ~/.nvim/backup >/dev/null 2>&1
 endif
 set backupdir-=.
 set backupdir+=.
 set backupdir-=~/
-set backupdir^=~/.vim/backup/
-set backupdir^=./.vim-backup/
+set backupdir^=~/.nvim/backup/
+set backupdir^=./.nvim-backup/
 set backup
 
 " Save your swp files to a less annoying place than the current directory.
-" If youG have .vim-swap in the current directory, it'll use that.
-" Otherwise it saves it to ~/.vim/swap, ~/tmp or .
-if isdirectory($HOME . '/.vim/swap') == 0
-  :silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
+" If youG have .nvim-swap in the current directory, it'll use that.
+" Otherwise it saves it to ~/.nvim/swap, ~/tmp or .
+if isdirectory($HOME . '/.nvim/swap') == 0
+  :silent !mkdir -p ~/.nvim/swap >/dev/null 2>&1
 endif
-set directory=./.vim-swap//
-set directory+=~/.vim/swap//
+set directory=./.nvim-swap//
+set directory+=~/.nvim/swap//
 set directory+=~/tmp//
 set directory+=.
 
 " viminfo stores the the state of your previous editing session
-set viminfo+=n~/.vim/viminfo
+set viminfo+=n~/.nvim/viminfo
 
 if exists("+undofile")
   " undofile - This allows you to use undos after exiting and restarting
-  " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
+  " This, like swap and backups, uses .nvim-undo first, then ~/.nvim/undo
   " :help undo-persistence
   " This is only present in 7.3+
-  if isdirectory($HOME . '/.vim/undo') == 0
-    :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
+  if isdirectory($HOME . '/.nvim/undo') == 0
+    :silent !mkdir -p ~/.nvim/undo > /dev/null 2>&1
   endif
-  set undodir=./.vim-undo//
-  set undodir+=~/.vim/undo//
+  set undodir=./.nvim-undo//
+  set undodir+=~/.nvim/undo//
   set undofile
 endif
 
@@ -71,7 +71,6 @@ set novisualbell
 
 set statusline=
 set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set statusline+=%F
 
@@ -134,41 +133,30 @@ call vundle#begin('~/.config/nvim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'editorconfig/editorconfig-vim'
-Plugin 'w0rp/ale'
-Plugin 'shougo/deoplete.nvim'
-Plugin 'steelsojka/deoplete-flow'
 Plugin 'morhetz/gruvbox'
-Plugin 'posva/vim-vue'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'Nopik/vim-nerdtree-direnter'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 filetype plugin indent on  " allows auto-indenting depending on file type
 
-
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#flow#flow_bin = 'flow' 
-call deoplete#custom#option({
-\ 'auto_complete_delay': 0,
-\ 'smart_case': v:true,
-\})
-inoremap <expr><Enter>  pumvisible() ? "\<C-Y>" : "\<Enter>"
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-inoremap <expr><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
-
-
-
 let g:gitgutter_enabled = 1
 autocmd BufWritePost * GitGutter
-
-let g:airline#extensions#ale#enabled = 1
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\}
-let g:ale_fixers = {
-\	'javascript': ['eslint']
-\}
-nmap <leader>f <Plug>(ale_fix)
 
 colorscheme gruvbox
 set background=dark
 
+" NERDTree ------------------------------------------------------------------{{{
+
+map <C-s> :NERDTreeTabsToggle<CR>
+let g:nerdtree_tabs_open_on_console_startup=1
+let NERDTreeMapOpenInTab='<ENTER>'
+let g:nerdtree_tabs_autofind=1
+
+"}}}
 
