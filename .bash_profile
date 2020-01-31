@@ -20,4 +20,8 @@ export LC_NUMERIC="en_US.UTF-8"
 export LC_TIME="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-source /Users/user/.ghcup/env
+if [ -e /Users/user/.ghcup/env ]; then
+	source /Users/user/.ghcup/env
+fi
+export PATH="/usr/local/opt/icu4c/bin:$PATH"
+export PATH="/usr/local/opt/icu4c/sbin:$PATH"
